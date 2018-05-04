@@ -1,0 +1,156 @@
+[
+  {
+    "id": 1,
+    "latitude": 1.28304,
+    "longitude": 103.85199319999992,
+    "locationName": "Singapore",
+    "description": "in Asia"
+  },
+  {
+    "id": 2,
+    "latitude": 41.8336479,
+    "longitude": -87.8720464,
+    "locationName": "Chicago",
+    "description": "in North America"
+  },
+  {
+    "id": 3,
+    "latitude": -1.2890117,
+    "longitude": 36.793729600000006,
+    "locationName": "Nairobi",
+    "description": "in Africa"
+  },
+  {
+    "id": 4,
+    "latitude": 51.5014767,
+    "longitude": -0.0713608999999451,
+    "locationName": "London",
+    "description": "in Europe"
+  },
+  {
+    "id": 5,
+    "latitude": 51.9107013,
+    "longitude": 4.547834200000011,
+    "locationName": "Rotterdam",
+    "description": "in Europe"
+  },
+  {
+    "id": 6,
+    "latitude": 12.9657659,
+    "longitude": 77.5998538,
+    "locationName": "Bangalore",
+    "description": "in Asia"
+  },
+  {
+    "id": 7,
+    "latitude": 31.2240453,
+    "longitude": 121.1965697,
+    "locationName": "Shanghai",
+    "description": "in Asia"
+  },
+  {
+    "id": 8,
+    "latitude": 48.1548895,
+    "longitude": 11.4717964,
+    "locationName": "Munich",
+    "description": "in Europe"
+  },
+  {
+    "id": 9,
+    "latitude": 39.7642548,
+    "longitude": -104.9951939,
+    "locationName": "Denver",
+    "description": "in North America"
+  },
+  {
+    "id": 10,
+    "latitude": 34.0201613,
+    "longitude": -118.6919144,
+    "locationName": "Los Angeles",
+    "description": "in North America"
+  },
+  {
+    "id": 11,
+    "latitude": 43.6567919,
+    "longitude": -79.460932,
+    "locationName": "Toronto",
+    "description": "in North America"
+  },
+  {
+    "id": 12,
+    "latitude": 6.5480553,
+    "longitude": 3.2574159,
+    "locationName": "Lagos",
+    "description": "in Africa"
+  },
+  {
+    "id": 13,
+    "latitude": -23.6821604,
+    "longitude": -46.8754835,
+    "locationName": "Sao Paulo",
+    "description": "in South America"
+  },
+  {
+    "id": 14,
+    "latitude": 31.483673,
+    "longitude": 74.1861228,
+    "locationName": "Lahore",
+    "description": "in Asia"
+  },
+  {
+    "id": 15,
+    "latitude": 19.39068,
+    "longitude": -99.2836968,
+    "locationName": "Mexico City",
+    "description": "in North America"
+  },
+  {
+    "id": 16,
+    "latitude": 41.3947688,
+    "longitude": 2.0787284,
+    "locationName": "Barcelona",
+    "description": "in Europe"
+  },
+  {
+    "id": 17,
+    "latitude": 59.9171483,
+    "longitude": 30.0448898,
+    "locationName": "St. Petersburg",
+    "description": "in Europe"
+  },
+  {
+    "id": 18,
+    "latitude": 48.2206636,
+    "longitude": 16.3100206,
+    "locationName": "Vienna",
+    "description": "in Europe"
+  },
+  {
+    "id": 19,
+    "latitude": 55.6712474,
+    "longitude": 12.5237848,
+    "locationName": "Copenhagen",
+    "description": "in Europe"
+  },
+  {
+    "id": 20,
+    "latitude": 33.7676931,
+    "longitude": -84.4906436,
+    "locationName": "Atlanta",
+    "description": "in North America"
+  },
+  {
+    "id": 21,
+    "latitude": 29.8168824,
+    "longitude": -95.6814738,
+    "locationName": "Houston",
+    "description": "in North America"
+  },
+  {
+    "id": 22,
+    "latitude": -33.8934219,
+    "longitude": 151.20404600000006,
+    "locationName": "Sydney",
+    "description": "in Oceania"
+  }
+]
