@@ -1,7 +1,7 @@
 /* tslint:disable:no-invalid-this */
 import { Schema, model } from 'mongoose'
 
-const placeSchema = new Schema({
+export const placeSchema: Schema = new Schema({
   createdAt: Date,
   updatedAt: Date,
   id: Number,
@@ -18,9 +18,9 @@ placeSchema.pre('save', function(next) {
   this.updatedAt = new Date()
   console.log('this1', this)
 
-  if (!this.id) {
-    Place.find({}, setId.bind(this)).exec((err, res) => next())
-  }
+  // if (!this.id) {
+  //   Place.find({}, setId.bind(this)).exec((err, res) => next())
+  // }
 })
 
 function setId(err, places) {
@@ -39,21 +39,3 @@ function setId(err, places) {
 
   this.id = id + 1
 }
-
-// placeSchema.pre('save', next => {
-//   if (!this.createdAt) {
-//     this.createdAt = new Date()
-//   }
-//   if (!this.id) {
-//     this.id = Math.floor(Math.random() * 100) + 22
-//   }
-//   next()
-// })
-
-// placeSchema.methods.dudify = function() {
-//   this.name = this.name + '-dude';
-
-//   return this.name;
-// };
-
-export const Place = model('Place', placeSchema)

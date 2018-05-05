@@ -9,5 +9,7 @@ export const errorMiddleware = (
   console.log('doh!')
   console.error('server says:', err.message)
 
-  res.status(500).send(err.message)
+  const status = err.code === 'not-found' ? 404 : 500
+
+  res.status(status).send(err.message)
 }
