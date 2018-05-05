@@ -37,32 +37,19 @@ export class Routes {
     res: express.Response,
     next: express.NextFunction
   ) {
-    // if no sort parameter is provided, sort descending by default
+    // if no sort parameter is provided, sort descending by default (a-z)
     const { sort = SortOrder.Descending } = req.query
+    const sortFlag = sort === SortOrder.Descending ? '' : '-'
 
-    this.placeModel.find(
-      {},
-      this.fields,
-      (err: MongoError, docs: Location[]) => {
+    this.placeModel
+      .find({}, this.fields)
+      .sort(`${sortFlag}locationName`)
+      .exec((err: MongoError, docs: Location[]) => {
         if (err) return next(err)
 
-        const sortedDocs: Location[] = this.sortDocs(docs, sort)
-
-        res.locals.data = sortedDocs
+        res.locals.data = docs
         next()
-      }
-    )
-  }
-
-  sortDocs(docs, sort: string) {
-    return docs.sort((a, b) => {
-      const nameA = a['locationName'].toLowerCase()
-      const nameB = b['locationName'].toLowerCase()
-
-      if (nameA < nameB) return sort === SortOrder.Descending ? -1 : 1
-      if (nameA > nameB) return sort === SortOrder.Descending ? 1 : -1
-      return 0
-    })
+      })
   }
 
   getByLocation(
