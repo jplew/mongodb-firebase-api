@@ -1,41 +1,39 @@
-/* tslint:disable:no-invalid-this */
 import { Schema, model } from 'mongoose'
 
 export const placeSchema: Schema = new Schema({
-  createdAt: Date,
-  updatedAt: Date,
-  id: Number,
-  locationName: String,
-  latitude: Number,
-  longitude: Number,
-  description: String
+  createdAt: { type: Date, default: Date.now },
+  updatedAt: { type: Date, default: Date.now },
+  locationName: {
+    type: String,
+    required: true,
+    unique: true,
+    trim: true,
+    maxlength: 50
+  },
+  latitude: { type: Number, required: true, min: -90, max: 90 },
+  longitude: { type: Number, required: true, min: -180, max: 180 },
+  description: { type: String, required: true, maxlength: 300 }
 })
 
-placeSchema.pre('save', function(next) {
-  if (!this.createdAt) {
-    this.createdAt = new Date()
-  }
-  this.updatedAt = new Date()
-  console.log('this1', this)
+// placeSchema.pre('save', function(next) {
+//   if (!this.createdAt) {
+//     this.createdAt = new Date()
+//   }
+//   this.updatedAt = new Date()
+//   console.log('this1', this)
+// })
 
-  // if (!this.id) {
-  //   Place.find({}, setId.bind(this)).exec((err, res) => next())
-  // }
-})
+// setId(err, places) {
+// if (err) throw err
 
-function setId(err, places) {
-  console.log('this2', this)
+// places.sort((a, b) => a.id - b.id)
 
-  if (err) throw err
+// const lastObj = places[places.length - 1]
+// console.log(lastObj)
 
-  places.sort((a, b) => a.id - b.id)
+// const id = places[places.length - 1].id
 
-  const lastObj = places[places.length - 1]
-  console.log(lastObj)
+// console.log('next id is:', id + 1)
 
-  const id = places[places.length - 1].id
-
-  console.log('next id is:', id + 1)
-
-  this.id = id + 1
-}
+// this.id = id + 1
+// }

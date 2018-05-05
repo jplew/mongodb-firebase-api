@@ -14,14 +14,14 @@ export class Api {
   app: express.Application = express()
 
   constructor() {
-    this.initApp(this.app)
+    this.config(this.app)
   }
 
   static bootstrap(): Api {
     return new Api()
   }
 
-  initApp(app: express.Application) {
+  config(app: express.Application) {
     app.use(cors({ origin: true }))
 
     const connection: mongoose.Connection = mongoose.createConnection(

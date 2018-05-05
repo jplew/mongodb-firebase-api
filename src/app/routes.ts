@@ -28,7 +28,6 @@ export class Routes {
   setRoutes() {
     this.app.get('/places/:location', this.getByLocation.bind(this))
     this.app.get('/places', this.getAll.bind(this))
-
     this.app.post('/places/:location', this.create.bind(this))
     this.app.put('/places/:location', this.update.bind(this))
   }
