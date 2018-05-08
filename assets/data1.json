@@ -1,0 +1,134 @@
+[
+  {
+    "locationName": "Singapore",
+    "description": "in Asia",
+    "latitude": 1.28304,
+    "longitude": 103.85199319999992
+  },
+  {
+    "locationName": "Chicago",
+    "description": "in North America",
+    "latitude": 41.8336479,
+    "longitude": -87.8720464
+  },
+  {
+    "locationName": "Nairobi",
+    "description": "in Africa",
+    "latitude": -1.2890117,
+    "longitude": 36.793729600000006
+  },
+  {
+    "locationName": "London",
+    "description": "in Europe",
+    "latitude": 51.5014767,
+    "longitude": -0.0713608999999451
+  },
+  {
+    "locationName": "Rotterdam",
+    "description": "in Europe",
+    "latitude": 51.9107013,
+    "longitude": 4.547834200000011
+  },
+  {
+    "locationName": "Bangalore",
+    "description": "in Asia",
+    "latitude": 12.9657659,
+    "longitude": 77.5998538
+  },
+  {
+    "locationName": "Shanghai",
+    "description": "in Asia",
+    "latitude": 31.2240453,
+    "longitude": 121.1965697
+  },
+  {
+    "locationName": "Munich",
+    "description": "in Europe",
+    "latitude": 48.1548895,
+    "longitude": 11.4717964
+  },
+  {
+    "locationName": "Denver",
+    "description": "in North America",
+    "latitude": 39.7642548,
+    "longitude": -104.9951939
+  },
+  {
+    "locationName": "Los Angeles",
+    "description": "in North America",
+    "latitude": 34.0201613,
+    "longitude": -118.6919144
+  },
+  {
+    "locationName": "Toronto",
+    "description": "in North America",
+    "latitude": 43.6567919,
+    "longitude": -79.460932
+  },
+  {
+    "locationName": "Lagos",
+    "description": "in Africa",
+    "latitude": 6.5480553,
+    "longitude": 3.2574159
+  },
+  {
+    "locationName": "Sao Paulo",
+    "description": "in South America",
+    "latitude": -23.6821604,
+    "longitude": -46.8754835
+  },
+  {
+    "locationName": "Lahore",
+    "description": "in Asia",
+    "latitude": 31.483673,
+    "longitude": 74.1861228
+  },
+  {
+    "locationName": "Mexico City",
+    "description": "in North America",
+    "latitude": 19.39068,
+    "longitude": -99.2836968
+  },
+  {
+    "locationName": "Barcelona",
+    "description": "in Europe",
+    "latitude": 41.3947688,
+    "longitude": 2.0787284
+  },
+  {
+    "locationName": "St. Petersburg",
+    "description": "in Europe",
+    "latitude": 59.9171483,
+    "longitude": 30.0448898
+  },
+  {
+    "locationName": "Vienna",
+    "description": "in Europe",
+    "latitude": 48.2206636,
+    "longitude": 16.3100206
+  },
+  {
+    "locationName": "Copenhagen",
+    "description": "in Europe",
+    "latitude": 55.6712474,
+    "longitude": 12.5237848
+  },
+  {
+    "locationName": "Atlanta",
+    "description": "in North America",
+    "latitude": 33.7676931,
+    "longitude": -84.4906436
+  },
+  {
+    "locationName": "Houston",
+    "description": "in North America",
+    "latitude": 29.8168824,
+    "longitude": -95.6814738
+  },
+  {
+    "locationName": "Sydney",
+    "description": "in Oceania",
+    "latitude": -33.8934219,
+    "longitude": 151.20404600000006
+  }
+]

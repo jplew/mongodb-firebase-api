@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose'
 
 export const placeSchema: Schema = new Schema({
-  createdAt: { type: Date, default: Date.now },
+  createdAt: { type: Date },
   updatedAt: { type: Date, default: Date.now },
   locationName: {
     type: String,
@@ -15,13 +15,13 @@ export const placeSchema: Schema = new Schema({
   description: { type: String, required: true, maxlength: 300 }
 })
 
-// placeSchema.pre('save', function(next) {
-//   if (!this.createdAt) {
-//     this.createdAt = new Date()
-//   }
-//   this.updatedAt = new Date()
-//   console.log('this1', this)
-// })
+placeSchema.pre('save', function(next) {
+  if (!this.createdAt) {
+    console.log('new creation date')
+    this.createdAt = new Date()
+  }
+  next()
+})
 
 // setId(err, places) {
 // if (err) throw err

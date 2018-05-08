@@ -9,7 +9,7 @@ enum SortOrder {
 }
 
 export class Routes {
-  fields = 'locationName latitude longitude description'
+  fields = '-_id locationName latitude longitude description'
 
   constructor(
     private app: express.Application,
@@ -29,6 +29,7 @@ export class Routes {
     this.app.get('/places/:location', this.getByLocation.bind(this))
     this.app.get('/places', this.getAll.bind(this))
     this.app.post('/places/:location', this.create.bind(this))
+    this.app.post('/places', this.create.bind(this))
     this.app.put('/places/:location', this.update.bind(this))
   }
 
@@ -45,7 +46,7 @@ export class Routes {
       .find({}, this.fields)
       .sort(`${sortFlag}locationName`)
       .exec((err: MongoError, docs: Location[]) => {
-        if (err) return next(err)
+        if (err) return this.handleError(err, next)
 
         res.locals.data = docs
         next()
@@ -57,14 +58,16 @@ export class Routes {
     res: express.Response,
     next: express.NextFunction
   ) {
-    const location = req.params.location
+    const locationName = this.getLocationName(req)
 
     this.placeModel.findOne(
-      { locationName: location },
+      // doing a text search requires manual creation of a text index, but it allows text-insensitive searching and fuzzy matching. Opting for normal field match instead.
+      // { $text: { $search: location } },
+      { locationName },
       this.fields,
       (err: MongoError, doc: Location) => {
         if (err) {
-          return next(err)
+          return this.handleError(err, next)
         }
         console.log('doc is', doc)
         if (!doc) {
@@ -72,7 +75,7 @@ export class Routes {
           next(
             new HttpsError(
               'not-found',
-              `Unable to find a location by the name '${location}'.`
+              `Unable to find a location by the name '${locationName}'.`
             )
           )
         }
@@ -83,10 +86,16 @@ export class Routes {
     )
   }
 
-  create(req: express.Request) {
-    console.log('query params', req.query)
+  create(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const paramsObj = this.hasBody(req.body) ? req.body : req.query
 
-    const { latitude, longitude, locationName, description } = req.query
+    let { latitude, longitude, locationName, description } = paramsObj
+
+    locationName = req.params.location || locationName
 
     const newPlace = new this.placeModel({
       latitude,
@@ -95,12 +104,12 @@ export class Routes {
       description
     })
 
-    newPlace.save(err => {
-      if (err) throw err
-      console.log('Place saved successfully!', newPlace)
+    newPlace.save((err, doc) => {
+      if (err) return this.handleError(err, next)
+      console.log('Place saved successfully:', newPlace)
+      res.locals.data = doc
+      next()
     })
-
-    return newPlace
   }
 
   update(
@@ -108,33 +117,17 @@ export class Routes {
     res: express.Response,
     next: express.NextFunction
   ) {
-    const location = req.params.location
+    const locationName = this.getLocationName(req)
 
-    const { latitude, longitude, locationName, description } = req.query
-
-    const update = {}
-
-    if (latitude) {
-      update['latitude'] = latitude
-    }
-
-    if (longitude) {
-      update['longitude'] = longitude
-    }
-
-    if (locationName) {
-      update['locationName'] = locationName
-    }
-
-    if (description) {
-      update['description'] = description
-    }
+    const paramsObj = this.hasBody(req.body) ? req.body : req.query
 
     this.placeModel.findOneAndUpdate(
-      { locationName: location },
-      update,
-      { new: true },
+      { locationName },
+      paramsObj,
+      { new: true, runValidators: true, fields: this.fields },
       (err, doc) => {
+        if (err) return this.handleError(err, next)
+        console.log('Document updated successfully:', doc)
         res.locals.data = doc
         next()
       }
@@ -142,6 +135,25 @@ export class Routes {
   }
 
   delete(id: number) {
-    return '45'
+    return 'Delete functionality not yet ready.'
+  }
+
+  private getLocationName(req: express.Request) {
+    // console.log('req.params', req.params) console.log(req.params.location)
+
+    return req.params.location
+      ? req.params.location
+      : this.hasBody(req.body)
+        ? req.body.locationName
+        : req.query.locationName
+  }
+
+  private hasBody(body): Boolean {
+    return Object.keys(body).length > 0
+  }
+
+  private handleError(err: MongoError, next: express.NextFunction) {
+    console.log('terrible errible')
+    return next(err)
   }
 }
