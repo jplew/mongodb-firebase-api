@@ -3,8 +3,8 @@ import * as express from 'express'
 import * as mongoose from 'mongoose'
 import { errorMiddleware } from './middleware/error'
 import { renderMiddleware } from './middleware/render'
+import { interceptMiddleware } from './middleware/interceptor'
 import { LocationModel } from './models/location'
-import { IModel } from './models/model'
 import { Routes } from './routes'
 import { placeSchema } from './schemas/schemas'
 
@@ -23,6 +23,8 @@ export class Api {
 
   config(app: express.Application) {
     app.use(cors({ origin: true }))
+
+    app.use(interceptMiddleware)
 
     const connection: mongoose.Connection = mongoose.createConnection(
       process.env.MONGO_URI

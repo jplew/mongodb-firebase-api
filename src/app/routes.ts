@@ -31,6 +31,7 @@ export class Routes {
     this.app.post('/places/:location', this.create.bind(this))
     this.app.post('/places', this.create.bind(this))
     this.app.put('/places/:location', this.update.bind(this))
+    this.app.delete('/places/:location', this.delete.bind(this))
   }
 
   getAll(
@@ -42,11 +43,14 @@ export class Routes {
     const { sort = SortOrder.Descending } = req.query
     const sortFlag = sort === SortOrder.Descending ? '' : '-'
 
-    this.placeModel
+    return this.placeModel
       .find({}, this.fields)
       .sort(`${sortFlag}locationName`)
       .exec((err: MongoError, docs: Location[]) => {
-        if (err) return this.handleError(err, next)
+        if (err) {
+          this.handleError(err, next)
+          return
+        }
 
         res.locals.data = docs
         next()
@@ -67,7 +71,8 @@ export class Routes {
       this.fields,
       (err: MongoError, doc: Location) => {
         if (err) {
-          return this.handleError(err, next)
+          this.handleError(err, next)
+          return
         }
         console.log('doc is', doc)
         if (!doc) {
@@ -93,9 +98,9 @@ export class Routes {
   ) {
     const paramsObj = this.hasBody(req.body) ? req.body : req.query
 
-    let { latitude, longitude, locationName, description } = paramsObj
+    const { latitude, longitude, description } = paramsObj
 
-    locationName = req.params.location || locationName
+    const locationName = req.params.location || paramsObj.locationName
 
     const newPlace = new this.placeModel({
       latitude,
@@ -104,8 +109,12 @@ export class Routes {
       description
     })
 
-    newPlace.save((err, doc) => {
-      if (err) return this.handleError(err, next)
+    return newPlace.save((err, doc) => {
+      if (err) {
+        this.handleError(err, next)
+        return
+      }
+
       console.log('Place saved successfully:', newPlace)
       res.locals.data = doc
       next()
@@ -126,7 +135,10 @@ export class Routes {
       paramsObj,
       { new: true, runValidators: true, fields: this.fields },
       (err, doc) => {
-        if (err) return this.handleError(err, next)
+        if (err) {
+          this.handleError(err, next)
+          return
+        }
         console.log('Document updated successfully:', doc)
         res.locals.data = doc
         next()
@@ -134,11 +146,26 @@ export class Routes {
     )
   }
 
-  delete(id: number) {
-    return 'Delete functionality not yet ready.'
+  delete(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    const locationName = this.getLocationName(req)
+
+    this.placeModel.deleteOne({ locationName }, err => {
+      if (err) {
+        this.handleError(err, next)
+        return
+      }
+      const message = `Document '${locationName}' deleted successfully.`
+      console.log(message)
+      res.locals.data = message
+      next()
+    })
   }
 
-  private getLocationName(req: express.Request) {
+  private getLocationName(req: express.Request): string {
     // console.log('req.params', req.params) console.log(req.params.location)
 
     return req.params.location
@@ -148,12 +175,13 @@ export class Routes {
         : req.query.locationName
   }
 
-  private hasBody(body): Boolean {
+  private hasBody(body): boolean {
     return Object.keys(body).length > 0
   }
 
   private handleError(err: MongoError, next: express.NextFunction) {
     console.log('terrible errible')
-    return next(err)
+    next(err)
+    return
   }
 }

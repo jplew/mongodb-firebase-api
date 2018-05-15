@@ -1,6 +1,5 @@
 /* tslint:disable:no-invalid-this */
-import { Document, Schema, model } from 'mongoose'
-import { placeSchema } from '../schemas/schemas'
+import { Document } from 'mongoose'
 
 export interface Location {
   uid: number

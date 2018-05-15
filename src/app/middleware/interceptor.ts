@@ -1,11 +1,12 @@
 import * as express from 'express'
 
-export const renderMiddleware = (
+export const interceptMiddleware = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => {
-  console.log('this is the end')
+  console.log('intercept req is', req)
+  console.log('intercept res is', res)
 
-  res.json(res.locals.data)
+  next()
 }
