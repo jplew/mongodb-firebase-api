@@ -166,8 +166,6 @@ export class Routes {
   }
 
   private getLocationName(req: express.Request): string {
-    // console.log('req.params', req.params) console.log(req.params.location)
-
     return req.params.location
       ? req.params.location
       : this.hasBody(req.body)
@@ -180,7 +178,6 @@ export class Routes {
   }
 
   private handleError(err: MongoError, next: express.NextFunction) {
-    console.log('terrible errible')
     next(err)
     return
   }
