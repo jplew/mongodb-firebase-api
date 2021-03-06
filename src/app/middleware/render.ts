@@ -1,11 +1,11 @@
-import * as express from 'express'
+import * as express from "express";
 
 export const renderMiddleware = (
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
 ) => {
-  console.log('this is the end')
+  console.log("this is the end");
 
-  res.json(res.locals.data)
-}
+  res.json(res.locals.data);
+};

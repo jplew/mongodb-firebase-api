@@ -1,5 +1,5 @@
 // tslint:disable:no-invalid-this
-import { Schema } from 'mongoose'
+import { Schema } from "mongoose";
 
 export const placeSchema: Schema = new Schema({
   createdAt: { type: Date },
@@ -9,20 +9,20 @@ export const placeSchema: Schema = new Schema({
     required: true,
     unique: true,
     trim: true,
-    maxlength: 50
+    maxlength: 50,
   },
   latitude: { type: Number, required: true, min: -90, max: 90 },
   longitude: { type: Number, required: true, min: -180, max: 180 },
-  description: { type: String, required: true, maxlength: 300 }
-})
+  description: { type: String, required: true, maxlength: 300 },
+});
 
-placeSchema.pre('save', function(next) {
-  if (!this['createdAt']) {
-    console.log('new creation date')
-    this['createdAt'] = new Date()
-  }
-  next()
-})
+placeSchema.pre("save", function(next) {
+  // if (!this['createdAt']) {
+  //   console.log('new creation date')
+  //   this['createdAt'] = new Date()
+  // }
+  next();
+});
 
 // setId(err, places) {
 // if (err) throw err
