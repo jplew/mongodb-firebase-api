@@ -1,34 +1,47 @@
-import * as functions from "firebase-functions";
+import * as cors from "cors";
 import * as express from "express";
-import { Api } from "./app/api";
+import * as mongoose from "mongoose";
+import { errorMiddleware } from "./middleware/error";
+import { renderMiddleware } from "./middleware/render";
+import { Routes } from "./routes";
+import { placeSchema } from "./schemas/schemas";
 
-const PlacesApi: express.Application = Api.bootstrap().app;
+require("dotenv").config();
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", { structuredData: true });
-//   response.send("Hello from Firebase!");
-// });
+export class Api {
+  static bootstrap(): Api {
+    return new Api();
+  }
 
-export const api = functions.https.onRequest(PlacesApi);
+  config() {
+    const app = express();
+    app.use(cors({ origin: true }));
 
-// export const api = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", { structuredData: true });
-//   response.send("Hello API!");
-// });
+    app.use(express.json());
 
-// const MongoClient = require("mongodb").MongoClient;
+    const MONGO_URI = process.env.MONGO_URI || "";
 
-// const uri =
-//   "mongodb+srv://jplew:<password>@crudapp.mgylm.mongodb.net/CrudApp?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-// client.connect((err) => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
+    // console.log({ MONGO_URI });
+    // Mongo Connection string is secret, loaded from a .env file
+    const connection: mongoose.Connection = mongoose.createConnection(
+        MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }
+    );
+
+    const placeModel = connection.model("Place", placeSchema, "places");
+
+    Routes.init(app, placeModel);
+
+    app.use(renderMiddleware);
+    app.use(errorMiddleware);
+
+    const port = 3000;
+
+    app.listen(port, () => {
+      console.log(`Example app listening on port ${port}`);
+    });
+  }
+}
+
+Api.bootstrap().config();
+
+

@@ -1,5 +1,4 @@
 import * as express from "express";
-import { HttpsError } from "firebase-functions/lib/providers/https";
 import { CallbackError, Error as MongoError, Model } from "mongoose";
 import { LocationModel, Location } from "./models/location";
 
@@ -40,8 +39,6 @@ export class Routes {
     const { sort = SortOrder.Descending } = req.query;
     const sortFlag = sort === SortOrder.Descending ? "" : "-";
 
-    console.log("getting all");
-
     return this.placeModel
         .find({}, this.fields)
         .sort(`${sortFlag}locationName`)
@@ -57,7 +54,7 @@ export class Routes {
         });
   }
 
-  async getByLocation(
+  getByLocation(
       req: express.Request,
       res: express.Response,
       next: express.NextFunction
@@ -82,10 +79,7 @@ export class Routes {
           if (!doc) {
             console.log("did not get a response");
             next(
-                new HttpsError(
-                    "not-found",
-                    `Unable to find a location by the name '${query}'.`
-                )
+                new Error( `Unable to find a location by the name '${query}'.`)
             );
           }
 
