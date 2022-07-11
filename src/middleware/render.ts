@@ -6,6 +6,7 @@ export const renderMiddleware = (
     next: express.NextFunction
 ) => {
   console.log("this is the end");
+  console.log("data", res.locals.data);
 
   res.json(res.locals.data);
 };
